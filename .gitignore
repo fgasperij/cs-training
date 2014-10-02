@@ -1,3 +1,7 @@
+# IO and exec files
+io/
+run/
+
 # Compiled Object files
 *.slo
 *.lo
