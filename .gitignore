@@ -1,6 +1,7 @@
 # IO and exec files
 io/
 run/
+*.DYSM
 
 # Compiled Object files
 *.slo
