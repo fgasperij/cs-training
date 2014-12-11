@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <limits>
+#include <algorithm>
 
 using namespace std;
 
@@ -18,26 +18,15 @@ int main()
     }
   }
 
-  int max = numeric_limits<int>::min();
-  vector<vector<int> > dp(discs, vector<int> (discs));
+  int max_so_far = -1;
+  int previous_position_max = 0;
   for (int i = 0; i < discs; ++i) {
-    dp[i][i] = board[i] ? -1 : 1;
-    if (dp[i][i] > max) {
-      max = dp[i][i];
-    }
+    int current = board[i] ? -1 : 1; 
+    previous_position_max = max(current, previous_position_max+current);
+    max_so_far = max(max_so_far, previous_position_max); 
   }
 
-  for(int i = 0; i < discs; ++i) {
-    for(int j = i+1; j < discs; ++j) {
-      int change = board[j] ? -1 : 1;
-      dp[i][j] = dp[i][j-1]+change;
-      if (dp[i][j] > max) {
-        max = dp[i][j];
-      }
-    }
-  }
-
-  cout << ones+max << endl;
+  cout << ones+max_so_far << endl;
 
   return 0;
 }
