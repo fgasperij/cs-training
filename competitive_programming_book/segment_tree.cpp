@@ -52,21 +52,17 @@ int SegmentTree::rmq(int p, int l, int r, int i, int j) {
   if (l >= i && r <= j) {
     return st[p];
   }
-
-  int min_l = -1;
-  int min_r = -1;
-  if (l <= j && (l+r)/2 >= i) {
-    min_l = rmq(left(p), l, (l+r)/2, i, j);
-  }
-  if ((l+r)/2 + 1 <= j && r >= i) {
-    min_r = rmq(right(p), (l+r)/2 + 1, r, i, j);
+  if (j < l || i > r) {
+    return -1;
   }
 
-  if (min_r == -1 || (A[min_l] < A[min_r] && min_l != -1)) {
-    return min_l;
-  }
+  int min_l = rmq(left(p), l, (l+r)/2, i, j);
+  int min_r = rmq(right(p), (l+r)/2 + 1, r, i, j);
 
-  return min_r;
+  if (min_l == -1) return min_r;
+  if (min_r == -1) return min_l;
+
+  return (A[min_l] < A[min_r]) ? min_l : min_r;
 }
 
 int SegmentTree::rmq(int i, int j) {
