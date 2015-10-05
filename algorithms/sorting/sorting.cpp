@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include <algorithm>
 
 using namespace std;
 
@@ -170,6 +171,61 @@ void merge_sort(vector<int> &A, int left, int right, vector<int> &scratch) {
   return;
 }
 
+void selection_sort(vector<int> &A) {
+  int min;
+  for (int i = 0; i < A.size()-1; ++i) {
+    min = i;
+    for (int j = i+1; j < A.size(); ++j) {
+      if (A[min] > A[j]) {
+        min = j;
+      }
+    }
+    swap(A[min], A[i]);
+  }
+
+  return;
+}
+
+void bubble_sort(vector<int> &A) {
+  for (int i = A.size(); i > 1; --i) {
+    for (int j = 1; j < i; ++j) {
+      if (A[j-1] > A[j]) {
+        swap(A[j], A[j-1]);
+      }
+    }
+  }
+}
+
+void quick_sort_interval(vector<int> &A, int left, int right) {
+  if (left+1 >= right) return;
+  int li = left, ri = right-1;
+  int pivot = A[left+(right-left)/2];
+  int pivot_i = left+(right-left)/2;
+
+  while (li <= ri) {
+    if (A[li] >= pivot && A[ri] < pivot) {
+      swap(A[li], A[ri]);
+    }
+
+    if (A[li] < pivot) ++li;
+    if (A[ri] >= pivot) --ri;
+  }
+
+  if (li == left) {
+    swap(A[left], A[pivot_i]);
+    quick_sort_interval(A, left+1, right);
+  } else {
+    quick_sort_interval(A, left, li);
+    quick_sort_interval(A, li, right);
+  }
+
+  return;
+}
+
+void quick_sort(vector<int> &A) {
+  quick_sort_interval(A, 0, A.size());
+}
+
 int main() {
   srand(time(NULL));
 
@@ -199,6 +255,29 @@ int main() {
   print_vector(B);
   cout << (is_sorted(B) ? "SUCCESSFULL!" : "WRONG!") << endl;
 
+  // selection sort
+  cout << "Selection sort\n";
+  vector<int> D = generate_random_vector(100);
+  print_vector(D);
+  selection_sort(D);
+  print_vector(D);
+  cout << (is_sorted(D) ? "SUCCESSFULL!" : "WRONG!") << endl;
+
+  // bubble sort
+  cout << "Bubble sort\n";
+  vector<int> E = generate_random_vector(100);
+  print_vector(E);
+  bubble_sort(E);
+  print_vector(E);
+  cout << (is_sorted(E) ? "SUCCESSFULL!" : "WRONG!") << endl;
+
+  // quick sort
+  cout << "Quick sort\n";
+  vector<int> F = generate_random_vector(100);
+  print_vector(F);
+  quick_sort(F);
+  print_vector(F);
+  cout << (is_sorted(F) ? "SUCCFSSFULL!" : "WRONG!") << endl;
 
   return 0;
 }
