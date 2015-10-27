@@ -5,19 +5,21 @@
 
 using namespace std;
 
+typedef long long ll;
+
 int main() {
   int digits;
   cin >> digits;
-  vector<vector<int> > quirks(4, vector<int>());
+  vector<vector<ll> > quirks(4, vector<ll>());
   while (!cin.eof()) {
-    vector<int> &c_quirks = quirks.at((digits-2)/2);
+    vector<ll> &c_quirks = quirks.at((digits-2)/2);
     if (c_quirks.empty()) {
-      int max = pow(10, digits/2);
-      for (int i = 0; i < max; ++i) {
-        int square = pow(i, 2);
-        int half_taker = pow(10, digits/2);
-        int left = square/half_taker;
-        int right = square % half_taker;
+      ll max = pow(10, digits/2);
+      for (ll i = 0; i < max; ++i) {
+        ll square = pow(i, 2);
+        ll half_taker = pow(10, digits/2);
+        ll left = square/half_taker;
+        ll right = square % half_taker;
         if (left+right == i) {
           c_quirks.push_back(square);
         }
