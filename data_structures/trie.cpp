@@ -103,7 +103,7 @@ int main() {
   insert("holas");
   insert("hora");
   insert("hola");
-  insert("lalo");
+  insert("llalo");
 
   if (!check("holas")) {
     cout << "ERROR\n";
