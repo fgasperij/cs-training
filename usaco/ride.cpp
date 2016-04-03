@@ -10,15 +10,13 @@ TASK: ride
 
 using namespace std;
 
-int char_prod(int accum, char elem) {
-  return accum*(((int)elem-'A')+1);
+int char_prod(const int accum, const char elem) {
+  return accum*(((int)(elem-'A'))+1);
 }
 
 int name_to_number(string name) {
   int prod = 1;
-  accumulate(name.begin(), name.end(), prod, char_prod);
-  
-  return prod;
+  return accumulate(name.begin(), name.end(), prod, char_prod);
 }
 
 int main() {
