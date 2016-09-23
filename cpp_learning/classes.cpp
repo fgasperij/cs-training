@@ -3,64 +3,57 @@
 
 using namespace std;
 
+template <typename T>
 class A {
-  public:
-    int an_int;
-    int* arr;
-
-    A(int a) : an_int(a) {
-      arr = new int[a];
-    };
-    A() : an_int(0) {};
-
-    virtual void do_something() {
-      cout << "Parent class." << endl;
-      cout << an_int << endl;
-    }
-    void set_int(int i) {
-      an_int = i;
-    }
-
-    ~A() {
-      delete[] arr;
-    }
-
-};
-
-class B : public A {
-
-  friend void friendly_function(B& obj);
-
-  public:
-    B(int a) : priv_int(4), prot_int(9) {};
-
-    void do_something() {
-      cout << "Sub class" << endl;
-      cout << an_int << endl;
-    }
-
-  protected:
-    int prot_int;
 
   private:
-    int priv_int;
+    T x;
+
+  public:
+    A() {
+      cout << "Base class no arg ctor." << endl;
+    }
+    A(T y) {
+      cout << "Base class with arg ctor." << endl;
+      x = y;
+    }
+    virtual void do_something() {
+      cout << "Parent class." << endl;
+      cout << x << endl;
+    }
 };
 
-void friendly_function(B& obj) {
-  cout << obj.priv_int << endl;
-  cout << obj.prot_int << endl;
+template <typename T>
+class B : public A<T> {
+  public:
+    B() {
+      cout << "Sub class no arg ctor." << endl;
+    }
+    B(int x) {
+      cout << "Sub class with arg ctor." << endl;
+      cout << x << endl;
+    }
+    void do_something() {
+      cout << "Sub class" << endl;
+    }
 };
+
+class C {};
+
+template <typename T>
+void tfunc(T a, T b) {
+  cout << a << b << endl;
+}
 
 int main() {
-  /* B b(5); */
-  /* A& a = b; */
-  /* a.set_int(3); */
-  /* a.do_something(); */
-  /* b.do_something(); */
-  /* friendly_function(b); */
+  A<int> a(5);
+  a.do_something();
 
-  /* A c(8); */
-  /* c.do_something(); */
+  C* c = new C;
+  C* cc = new C();
+
+  B<char> b(3);
+  tfunc<int>(5, 'a');
 
 
   return 0;
