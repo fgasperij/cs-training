@@ -19,7 +19,7 @@ int main() {
         classified[i] = true;
         vector<int> group;
         group.push_back(i+1);
-        
+
         unordered_map<char, int> counts;
         string current_string = A[i];
         cout << current_string << endl;
@@ -30,7 +30,7 @@ int main() {
                 ++counts[current_string[j]];
             }
         }
-        
+
         for (int j = i+1; j < A.size(); ++j) {
             current_string = A[j];
             if (current_string.size() != A[i].size() || classified[j]) continue;
@@ -50,11 +50,11 @@ int main() {
                 classified[j] = true;
             }
         }
-        
+
         groups.push_back(group);
     }
     //return groups;
-    
+
     for (int i = 0; i < groups.size(); ++i) {
       cout << "[ ";
       for (int j = 0; j < groups[i].size(); ++j) {
