@@ -43,7 +43,7 @@ void RMQSegmentTree::build(int p, int l, int r) {
     // base case
     st[p] = l;
     return;
-  } 
+  }
 
   int l_child = left(p);
   int r_child = right(p);
@@ -157,11 +157,17 @@ void test_all_queries(const vector<int> &A, RMQSegmentTree &st) {
     }
   }
   cout << "\n";
-} 
+}
 
 int main() {
   vector<int> A;
-  A.push_back(18); A.push_back(17); A.push_back(13); A.push_back(19); A.push_back(15); A.push_back(11); A.push_back(20);
+  A.push_back(18);
+  A.push_back(17);
+  A.push_back(13);
+  A.push_back(19);
+  A.push_back(15);
+  A.push_back(11);
+  A.push_back(20);
 
   RMQSegmentTree st = RMQSegmentTree(A);
 

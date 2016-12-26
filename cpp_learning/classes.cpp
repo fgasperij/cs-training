@@ -45,6 +45,18 @@ void tfunc(T a, T b) {
   cout << a << b << endl;
 }
 
+enum class WeekDay : char {
+  Monday,
+  Tuesday,
+  Wednesday,
+  Thursday,
+  Friday,
+  Saturday,
+  Sunday
+};
+
+WeekDay today = WeekDay::Sunday;
+
 int main() {
   A<int> a(5);
   a.do_something();

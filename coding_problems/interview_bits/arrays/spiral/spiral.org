@@ -1,0 +1,43 @@
+* disambiguate
+1. should the matrix be squared?
+yes, it's squared.
+
+2. is it 1 or 0 based?
+1 based.
+
+3. what should we do if n < 0?
+Fail. Throw.
+ 
+4. what should we do if n == 0?
+An empty matrix seems OK.
+
+5. may the matrix not enter on memory?
+It may not if the type of n is long long. We could try to perform the malloc and if it fails
+perform an mmap to build the matrix. The problem is that in that case we are not longer able to
+return a pointer, we need to return a file pointer.
+
+6. what is the max n we should allow? n^2 < 2^64-1?
+I don't know which is the context.
+
+* thinking
+I can't remember if the first time I solved this problem I had trouble coming up with the idea.
+If I remember correctly the conception was pretty quickly but it took me a ridicolous amount of 
+time to code it correctly with its tricky indices.
+
+* testing
+The only input is an int n:
+
+- n < 0      -> throws
+- n == 0     -> empty matrix
+- n == 1     -> [[[[1]]]]
+- n % 2 == 0 -> it changes the dimension of the last submatrix to be filled
+- n % 2 == 1 -> it changes the dimension of the last submatrix to be filled
+- max(n)     -> it handles correctly the case of the biggest n supported
+
+I believe these are good tests because they partition the argument space
+in a clear and complete way.
+
+* description
+It's a typical ad hoc problem. Once you get the necessary elements to perform the traversal
+the time to code it is a function of the neatness with which you translate your thoughts to code
+and don't fall in any index trap.
