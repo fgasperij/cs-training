@@ -5,11 +5,11 @@
 
 using namespace std;
 
-int min_minutes(int flor, int room, vector<vector<int> >& dp, vector<string>& building) {
+int min_minutes(int flor, int room, vector<vector<int> >& dp, vector<string>& building, int last_floor) {
     int floors = dp.size();
     int rooms = dp[0].size();
 
-    if (flor == dp.size() - 1) {
+    if (flor == last_floor) {
         return 0;
     }
 
@@ -34,8 +34,8 @@ int min_minutes(int flor, int room, vector<vector<int> >& dp, vector<string>& bu
     mins_left += end_left;
     mins_right += ((rooms - 1) - end_right);
 
-    mins_left += min_minutes(flor+1, end_left, dp, building);
-    mins_right += min_minutes(flor+1, end_right, dp, building);
+    mins_left += min_minutes(flor+1, end_left, dp, building, last_floor);
+    mins_right += min_minutes(flor+1, end_right, dp, building, last_floor);
 
     dp[flor][room] = min(mins_left, mins_right);
 
@@ -52,6 +52,11 @@ int main() {
     }
     reverse(building.begin(), building.end());
 
+    int last_floor = floors-1;
+    while (last_floor > 0 && all_of(building[last_floor].begin(), building[last_floor].end(), [](char c) { return c == '0'; }) ) {
+        --last_floor;
+    }
+
     int last_on_room = 0;
     for (int r = 1; r <= rooms; ++r) {
         if (building[0][r] == '1') {
@@ -61,7 +66,7 @@ int main() {
 
     int minutes = last_on_room;
     vector<vector<int> > dp(floors, vector<int> (rooms+2, 0));
-    minutes += min_minutes(0, last_on_room, dp, building);
+    minutes += min_minutes(0, last_on_room, dp, building, last_floor);
 
     cout << minutes << endl;
 
