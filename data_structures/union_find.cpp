@@ -39,10 +39,9 @@ bool UnionFind::isSameSet(int i, int j) {
 
 void UnionFind::unionSet(int i, int j) {
   // r_i root of i
-  if (!isSameSet(i, j)) {
-    int r_i = findSet(i);
-    int r_j = findSet(j);
-
+  int r_i = findSet(i);
+  int r_j = findSet(j);
+  if (!(r_i == r_j)) {
     if (rank[r_i] > rank[r_j]) {
       p[r_j] = r_i; // height does not increase
       sizes[r_i] += sizes[r_j];
