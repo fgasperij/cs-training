@@ -101,3 +101,48 @@ class SolutionClear:
             max_length = max(max_length, sliding_window_right - self.sliding_window_left + 1)
 
         return max_length
+    
+class SlidingWindow:
+    def __init__(self, s: str):
+        self.s = s
+        self.left = 0
+        self.right = 0
+
+    def has_next(self):
+        return self.right < len(self.s)
+
+    def slide_right(self):
+        self.right += 1
+
+    def slide_left_to(self, to: int):
+        self.left = to
+
+    def length(self):
+        return self.right - self.left + 1
+
+class Solution:
+
+    def is_char_in_sliding_window(self, current_char: str) -> bool:
+        if current_char in self.rightmost_position_for:
+            return self.rightmost_position_for[current_char] >= self.sliding_window.left
+        
+        return False
+
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        sliding_window = SlidingWindow(s)
+        self.rightmost_position_for = dict()
+        max_length_substring_without_repeating = 0
+
+        while sliding_window.has_next():
+            current_char = s[sliding_window.right]
+            if self.is_current_char_in_sliding_window(current_char):
+                new_left = self.rightmost_position_for[current_char] + 1
+                sliding_window.slide_left_to(new_left)
+            
+            self.rightmost_position_for[current_char] = sliding_window.right
+            
+            max_length_substring_without_repeating = max(max_length_substring_without_repeating, sliding_window.length())
+    
+            sliding_window.move_right()
+
+        return max_length_substring_without_repeating
