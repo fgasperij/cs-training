@@ -59,3 +59,45 @@ class SolutionWithPerfOptimization:
             max_length = max_length if max_length > right - left + 1 else right - left + 1
 
         return max_length
+    
+class SolutionClear:
+
+    def __init__(self):
+        self.rightmost_position_for = dict()
+        self.sliding_window_left = 0
+
+    def rightmost_position_for_char_yet(self, current_char: str) -> int:
+        if current_char in self.last_position:
+            return self.rightmost_position_for[current_char]
+        
+        return -1
+    
+    def is_char_in_sliding_window(self, current_char: str) -> bool:
+        seen_current_char = current_char in self.rightmost_position_for
+        
+        return seen_current_char and self.rightmost_position_for[current_char] >= self.sliding_window_left
+    
+    def update_sliding_window_left_to_only_include_current_char_once(self, current_char: str):
+        rightmost_position = self.rightmost_position_for_char_yet(current_char)
+        if rightmost_position >= self.sliding_window_left:
+            self.sliding_window_left = rightmost_position + 1
+
+    def update_rightmost_position_for(self, current_char: str, sliding_window_right: int):
+        self.rightmost_position_for[current_char] = sliding_window_right
+
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        self.rightmost_position_for = dict()
+        
+        self.sliding_window_left = 0
+        max_length_substring_without_repeating = 0
+        
+        for sliding_window_right in range(0, len(s)):
+            current_char = s[sliding_window_right]
+            if self.is_char_in_sliding_window(current_char):
+                self.update_sliding_window_left_to_only_include_current_char_once(current_char)
+
+            self.update_rightmost_position_for(current_char, sliding_window_right)
+            
+            max_length = max(max_length, sliding_window_right - self.sliding_window_left + 1)
+
+        return max_length
