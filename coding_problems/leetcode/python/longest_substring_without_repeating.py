@@ -44,3 +44,18 @@ class Solution:
             right = right + 1
 
         return max_length
+
+class SolutionWithPerfOptimization:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        last_position = dict()
+        left = 0
+        right = 0
+        max_length = 0
+        for right in range(0, len(s)):
+            if s[right] in last_position and left < last_position[s[right]] + 1:
+                left = last_position[s[right]] + 1
+
+            last_position[s[right]] = right
+            max_length = max_length if max_length > right - left + 1 else right - left + 1
+
+        return max_length
