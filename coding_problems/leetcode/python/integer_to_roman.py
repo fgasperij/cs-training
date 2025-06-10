@@ -36,3 +36,61 @@ class Solution:
                 num = num - val
 
         return "".join(result)
+    
+class SolutionWithPerfOptimization:
+    def intToRoman(self, num: int) -> str:
+        result = []
+
+        while num >= 1000:
+            result.append("M")
+            num = num - 1000
+
+        if num >= 900:
+            result.append("CM")
+            num = num - 900
+        
+        if num >= 500:
+            result.append("D")
+            num = num - 500
+        
+        if num >= 400:
+            result.append("CD")
+            num = num - 400
+
+        while num >= 100:
+            result.append("C")
+            num = num - 100
+
+        if num >= 90:
+            result.append("XC")
+            num = num - 90
+        
+        if num >= 50:
+            result.append("L")
+            num = num - 50
+        
+        if num >= 40:
+            result.append("XL")
+            num = num - 40
+
+        while num >= 10:
+            result.append("X")
+            num = num - 10
+
+        if num == 9:
+            result.append("IX")
+            return "".join(result)
+        
+        if num >= 5:
+            result.append("V")
+            num = num - 5
+
+        if num == 4:
+            result.append("IV")
+            return "".join(result)
+        
+        while num >= 1:
+            result.append("I")
+            num = num - 1
+
+        return "".join(result)
