@@ -94,3 +94,44 @@ class SolutionWithPerfOptimization:
             num = num - 1
 
         return "".join(result)
+    
+class PowerOfTenToRoman:
+    def __init__(self, power_of_ten: int, unit: str, fives: str, prev_unit: str):
+        self.power_of_ten = power_of_ten
+        self.unit = unit
+        self.fives = fives
+        self.prev_unit = prev_unit
+    
+    def can_convert(self, num: int) -> bool:
+        return num >= self.power_of_ten and num <= self.power_of_ten * 10
+
+    def convert(self, num: int) -> str:
+        num = num // self.power_of_ten
+        if num == 9:
+            return self.unit + self.prev_unit
+        if num >= 5:
+            return self.fives + self.unit * (num - 5)
+        if num == 4:
+            return self.unit + self.fives
+        
+        return self.unit * num
+
+class SolutionReadableAlternative:
+    def intToRoman(self, num: int) -> str:
+        result = []
+        while num >= 1000:
+            result.append("M")
+            num = num - 1000
+
+        powers_of_ten = [
+            PowerOfTenToRoman(100, "C", "D", "M"),
+            PowerOfTenToRoman(10, "X", "L", "C"),
+            PowerOfTenToRoman(1, "I", "V", "X"),
+        ]
+
+        for power_to_roman in powers_of_ten:
+            if power_to_roman.can_convert(num):
+                result.append(power_to_roman.convert(num))
+                num = num % power_to_roman.power_of_ten
+
+        return "".join(result)
